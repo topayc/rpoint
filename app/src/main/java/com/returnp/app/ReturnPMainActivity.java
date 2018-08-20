@@ -43,8 +43,8 @@ public class ReturnPMainActivity extends AppCompatActivity {
     public int mActivityStatus = 0;
 
     //public static final String INIT_URL = "http://returnp.com/main/index.do";
-   // public static final String INIT_URL = "http://1.220.50.226:9090/main/index.do";
-    public static final String INIT_URL = "http://192.168.0.29:8080/main/index.do";
+    public static final String INIT_URL = "http://1.220.50.226:9090/main/index.do";
+    //public static final String INIT_URL = "http://192.168.0.29:8080/main/index.do";
     public static final String BRIDGE_NAME = "returnpAndroidBridge";
 
     public static final int PERMISSION_REQUEST_CAMERA = 1;
@@ -186,6 +186,9 @@ public class ReturnPMainActivity extends AppCompatActivity {
         if (requestCode == IntentIntegrator.REQUEST_CODE) {
             IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
             this.setBridgeResponse("bridge.jsBridgeCallback", result.getContents());
+            if (result.getContents() == null || result.getContents().trim().length() == 0){
+                this.showGuide(this.getResources().getString(R.string.qr_sacn_error));
+            }
         } else {
             super.onActivityResult(requestCode, resultCode, data);
         }
@@ -212,7 +215,7 @@ public class ReturnPMainActivity extends AppCompatActivity {
         if (this.mWebView.getOriginalUrl().equalsIgnoreCase(ReturnPMainActivity.INIT_URL)) {
             if (System.currentTimeMillis() > backKeyPressedTime + 2000) {
                 backKeyPressedTime = System.currentTimeMillis();
-                showGuide();
+                showGuide(this.getResources().getString(R.string.finish_back));
                 return;
             }
             if (System.currentTimeMillis() <= backKeyPressedTime + 2000) {
@@ -227,8 +230,8 @@ public class ReturnPMainActivity extends AppCompatActivity {
         }
     }
 
-    public void showGuide() {
-        toast = Toast.makeText(this, "뒤로 버튼을 한번 더 누르시면 종료됩니다.", Toast.LENGTH_SHORT);
+    public void showGuide(String message) {
+        toast = Toast.makeText(this, message, Toast.LENGTH_SHORT);
         toast.show();
     }
 

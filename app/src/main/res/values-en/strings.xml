@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">ReturnP</string>
+    <string name="finish_back">click back button for finishing App</string>
+    <string name="qr_sacn_error">Sacnning Error. try it again</string>
+</resources>

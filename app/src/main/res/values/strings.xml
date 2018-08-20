@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">ReturnP</string>
+    <string name="finish_back">뒤로 버튼을 한번 더 누르시면 종료됩니다."</string>
+    <string name="qr_sacn_error">QR 코드가 제대로 스캔되지 않았습니다. 다시 시도해 주세요</string>
 </resources>
