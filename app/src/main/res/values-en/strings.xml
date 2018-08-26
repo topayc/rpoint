@@ -2,5 +2,5 @@
 <resources>
     <string name="app_name">ReturnP</string>
     <string name="finish_back">click back button for finishing App</string>
-    <string name="qr_sacn_error">Sacnning Error. try it again</string>
+    <string name="qr_sacn_error">The QRcode was not scanned.try it again</string>
 </resources>

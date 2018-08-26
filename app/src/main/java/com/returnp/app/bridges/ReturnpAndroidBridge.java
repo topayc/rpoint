@@ -6,10 +6,13 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 import android.graphics.Point;
 import android.support.v4.app.ActivityCompat;
+import android.util.Log;
 import android.view.Display;
 import android.webkit.JavascriptInterface;
+import android.widget.Toast;
 
 import com.google.zxing.integration.android.IntentIntegrator;
+import com.returnp.app.AnyOrientationCaptureActivity;
 import com.returnp.app.ReturnPMainActivity;
 import com.returnp.app.androidutils.AndroidUtil;
 import com.returnp.app.session.ReturnPSession;
@@ -47,30 +50,48 @@ public class ReturnpAndroidBridge {
 
     @JavascriptInterface
     public void scanQRCode() {
-        new IntentIntegrator((Activity) context).initiateScan();
+        IntentIntegrator integrato = new IntentIntegrator((Activity) context);
+        integrato.setCaptureActivity(AnyOrientationCaptureActivity.class);
+        integrato.addExtra("PROMPT_MESSAGE", "QRCode를 사각형안에 비춰 주세요");
+        integrato.setOrientationLocked(false);
+        integrato.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE_TYPES);
+        integrato.setCameraId(0);
+        integrato.setBeepEnabled(true);
+        integrato.setBarcodeImageEnabled(true);
+        integrato.initiateScan();
     }
 
     @JavascriptInterface
-    public void setDeivceSession(String userName, String userEmail, String userAutoToken) {
+    public void toast(String message) {
+        Toast toast = Toast.makeText(this.context, message, Toast.LENGTH_SHORT);
+        toast.show();
+    }
+
+    @JavascriptInterface
+    public void setDeviceSession(String session) {
+        Log.d("setDeviceSession", session);
+        String userName = session.split(":")[0];
+        String userEmail= session.split(":")[1];
+        String userAutoToken = session.split(":")[2];
         this.mSession.setUserSession(userName, userEmail, userAutoToken);
         this.setBridgeResponse(null, null);
     }
 
     @JavascriptInterface
-    public void clearDeivceSession() {
+    public void clearDeviceSession() {
         this.mSession.clearUserSession();
         this.setBridgeResponse(null, null);
     }
 
     @JavascriptInterface
-    public void getSessonValue(String key) {
-        String value = this.mSession.getSessionValue(key);
+    public void getSessionValue(String key) {
+        String value = null;
+        if (key.equals("PREF_ALL_SESSION")) {
+            value = this.mSession.getUserSession().toString();
+        }else {
+            value = this.mSession.getSessionValue(key);
+        }
         this.setBridgeResponse(null, value );
-    }
-
-    @JavascriptInterface
-    public void loadUrl(String url) {
-        ((ReturnPMainActivity) this.context).loadUrl(url);
     }
 
 

@@ -12,6 +12,8 @@ import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
 import android.webkit.WebChromeClient;
+import android.webkit.WebResourceRequest;
+import android.webkit.WebResourceResponse;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -42,8 +44,8 @@ public class ReturnPMainActivity extends AppCompatActivity {
     public static int ACTIVITY_EXITING = 2;
     public int mActivityStatus = 0;
 
-    //public static final String INIT_URL = "http://returnp.com/main/index.do";
-    public static final String INIT_URL = "http://1.220.50.226:9090/main/index.do";
+    public static final String INIT_URL = "http://returnp.com/main/index.do";
+    //public static final String INIT_URL = "http://1.220.50.226:9090/main/index.do";
     //public static final String INIT_URL = "http://192.168.0.29:8080/main/index.do";
     public static final String BRIDGE_NAME = "returnpAndroidBridge";
 
@@ -57,6 +59,7 @@ public class ReturnPMainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.mActivityStatus = ReturnPMainActivity.ACTIVITY_STARTING;
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -70,6 +73,7 @@ public class ReturnPMainActivity extends AppCompatActivity {
     }
 
     private void initActivity() {
+        this.mSession = new ReturnPSession(this);
         this.mReturnpAndroidBridge = new ReturnpAndroidBridge(this, this.mSession);
     }
 
@@ -107,26 +111,20 @@ public class ReturnPMainActivity extends AppCompatActivity {
         mWebView.setNetworkAvailable(true);
         mWebView.setWebChromeClient(new WebChromeClient());
 
-        if (this.mReturnpAndroidBridge == null)
-            this.mReturnpAndroidBridge = new ReturnpAndroidBridge(this, this.mSession);
-
         mWebView.addJavascriptInterface(this.mReturnpAndroidBridge, ReturnPMainActivity.BRIDGE_NAME);
         mWebView.setWebViewClient(new WebViewClient() {
-            @Override
+
+           @Override
             public void onPageFinished(final WebView view, final String url){
                 super.onPageFinished(view, url);
                 view.invalidate();
             }
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                /*String userAuthToken = ReturnPMainActivity.this.mSession.getUserAutoToken();
+                String userAuthToken = ReturnPMainActivity.this.mSession.getUserAutoToken();
                 Map<String, String> headerMap  = new HashMap<String, String>();
-                if (!"".endsWith(userAuthToken.trim())) {
-                    headerMap.put(ReturnPMainActivity.HEADER_USER_AUTH_TOKEN, userAuthToken);
-                }
-                mWebView.loadUrl(url, headerMap);
-                */
-                mWebView.loadUrl(url);
+                headerMap.put(ReturnPMainActivity.HEADER_USER_AUTH_TOKEN, userAuthToken);
+                ReturnPMainActivity.this.mWebView.loadUrl(url, headerMap);
                 return true;
             }
 

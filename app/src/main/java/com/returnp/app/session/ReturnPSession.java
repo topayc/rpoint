@@ -15,7 +15,7 @@ public class ReturnPSession {
     public static String PREF_USER_AUTO_TOKEN = "user_autu_token";
 
     private SharedPreferences sharedPreferences;
-    private ReturnPSession(Context context){
+    public ReturnPSession(Context context){
         this.sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
     }
 
@@ -59,9 +59,9 @@ public class ReturnPSession {
     public JSONObject getUserSession(){
         JSONObject session = new JSONObject();
         try {
-            session.put(ReturnPSession.PREF_USER_NAME, this.sharedPreferences.getString(ReturnPSession.PREF_USER_NAME, ""));
-            session.put(ReturnPSession.PREF_USER_EMAIL, this.sharedPreferences.getString(ReturnPSession.PREF_USER_EMAIL,""));
-            session.put(ReturnPSession.PREF_USER_AUTO_TOKEN, this.sharedPreferences.getString(ReturnPSession.PREF_USER_AUTO_TOKEN,""));
+            session.put(ReturnPSession.PREF_USER_NAME, this.sharedPreferences.getString(ReturnPSession.PREF_USER_NAME, null));
+            session.put(ReturnPSession.PREF_USER_EMAIL, this.sharedPreferences.getString(ReturnPSession.PREF_USER_EMAIL,null));
+            session.put(ReturnPSession.PREF_USER_AUTO_TOKEN, this.sharedPreferences.getString(ReturnPSession.PREF_USER_AUTO_TOKEN,null));
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -69,14 +69,14 @@ public class ReturnPSession {
     }
 
     public String getUserName(){
-        return this.sharedPreferences.getString(ReturnPSession.PREF_USER_NAME,"");
+        return this.sharedPreferences.getString(ReturnPSession.PREF_USER_NAME,null);
     }
 
     public String getUserEmail(){
-        return this.sharedPreferences.getString(ReturnPSession.PREF_USER_EMAIL,"");
+        return this.sharedPreferences.getString(ReturnPSession.PREF_USER_EMAIL,null);
     }
 
     public String getUserAutoToken(){
-        return this.sharedPreferences.getString(ReturnPSession.PREF_USER_AUTO_TOKEN,"");
+        return this.sharedPreferences.getString(ReturnPSession.PREF_USER_AUTO_TOKEN,null);
     }
 }
