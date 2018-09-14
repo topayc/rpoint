@@ -1,10 +1,8 @@
-package com.returnp.app.session;
+package com.returnp.returnpointapp.session;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
-
-import com.returnp.app.bridges.ReturnpAndroidBridge;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -12,7 +10,7 @@ import org.json.JSONObject;
 public class ReturnPSession {
     public static String PREF_USER_NAME = "user_name";
     public static String PREF_USER_EMAIL = "user_email";
-    public static String PREF_USER_AUTO_TOKEN = "user_autu_token";
+    public static String PREF_USER_AUTH_TOKEN = "user_auth_token";
 
     private SharedPreferences sharedPreferences;
     public ReturnPSession(Context context){
@@ -35,13 +33,13 @@ public class ReturnPSession {
         SharedPreferences.Editor editor = this.sharedPreferences.edit();
         editor.remove(ReturnPSession.PREF_USER_NAME);
         editor.remove(ReturnPSession.PREF_USER_EMAIL);
-        editor.remove(ReturnPSession.PREF_USER_AUTO_TOKEN);
+        editor.remove(ReturnPSession.PREF_USER_AUTH_TOKEN);
         editor.commit();
     }
 
     public void setUserAutoToken(String userAuthToken){
         SharedPreferences.Editor editor = this.sharedPreferences.edit();
-        editor.putString(ReturnPSession.PREF_USER_AUTO_TOKEN, userAuthToken);
+        editor.putString(ReturnPSession.PREF_USER_AUTH_TOKEN, userAuthToken);
         editor.commit();
     }
 
@@ -49,7 +47,7 @@ public class ReturnPSession {
         SharedPreferences.Editor editor = this.sharedPreferences.edit();
         editor.putString(ReturnPSession.PREF_USER_NAME, userName);
         editor.putString(ReturnPSession.PREF_USER_EMAIL, userEmail);
-        editor.putString(ReturnPSession.PREF_USER_AUTO_TOKEN, userAuthToken);
+        editor.putString(ReturnPSession.PREF_USER_AUTH_TOKEN, userAuthToken);
         editor.commit();
     }
     public String getSessionValue(String key){
@@ -61,7 +59,7 @@ public class ReturnPSession {
         try {
             session.put(ReturnPSession.PREF_USER_NAME, this.sharedPreferences.getString(ReturnPSession.PREF_USER_NAME, null));
             session.put(ReturnPSession.PREF_USER_EMAIL, this.sharedPreferences.getString(ReturnPSession.PREF_USER_EMAIL,null));
-            session.put(ReturnPSession.PREF_USER_AUTO_TOKEN, this.sharedPreferences.getString(ReturnPSession.PREF_USER_AUTO_TOKEN,null));
+            session.put(ReturnPSession.PREF_USER_AUTH_TOKEN, this.sharedPreferences.getString(ReturnPSession.PREF_USER_AUTH_TOKEN,null));
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -77,6 +75,6 @@ public class ReturnPSession {
     }
 
     public String getUserAutoToken(){
-        return this.sharedPreferences.getString(ReturnPSession.PREF_USER_AUTO_TOKEN,null);
+        return this.sharedPreferences.getString(ReturnPSession.PREF_USER_AUTH_TOKEN,null);
     }
 }

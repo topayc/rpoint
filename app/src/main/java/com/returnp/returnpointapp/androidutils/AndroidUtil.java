@@ -1,4 +1,4 @@
-package com.returnp.app.androidutils;
+package com.returnp.returnpointapp.androidutils;
 
 import android.content.Context;
 import android.telephony.TelephonyManager;

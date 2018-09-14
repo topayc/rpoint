@@ -1,20 +1,30 @@
 apply plugin: 'com.android.application'
 
 android {
+    def APP_NAME = "returnpoint_"
     compileSdkVersion 28
     defaultConfig {
-        applicationId "com.returnp.app"
+        applicationId "com.returnp.returnpointapp"
         minSdkVersion 14
         targetSdkVersion 28
-        versionCode 1
-        versionName "1.0"
+        versionCode 3
+        versionName "3.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        archivesBaseName = APP_NAME
     }
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            applicationVariants.all { variant -> variant.outputs.all { outputFileName = APP_NAME + "${variant.name}_${variant.versionName}.apk" } }
         }
+    }
+
+    lintOptions {
+        checkReleaseBuilds false
+        // Or, if you prefer, you can continue to check for errors in release builds,
+        // but continue the build even when errors are found:
+        abortOnError false
     }
 }
 

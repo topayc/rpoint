@@ -1,4 +1,4 @@
-package com.returnp.app;
+package com.returnp.returnpointapp;
 
 import com.journeyapps.barcodescanner.CaptureActivity;
 

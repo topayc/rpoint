@@ -2,4 +2,11 @@
     <string name="app_name">ReturnP</string>
     <string name="finish_back">뒤로 버튼을 한번 더 누르시면 종료됩니다."</string>
     <string name="qr_sacn_error">QR 코드가 스캔되지 않았습니다. 다시 시도해 주세요</string>
+    <string name="request_permission">해당 기능을 이용하기 위해서는 권한을 허용해주세요</string>
+    <string name="not_permission"> 권한이 허가되지 않았습니다</string>
+    <string name="phone">전화</string>
+    <string name="camera">카메라</string>
+    <string name="gps">GPS</string>
+    <color name="bg">#aaaaaa</color>
+
 </resources>
