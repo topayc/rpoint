@@ -18,6 +18,8 @@ import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
 import android.webkit.WebChromeClient;
+import android.webkit.WebResourceRequest;
+import android.webkit.WebResourceResponse;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -51,7 +53,10 @@ public class ReturnPMainActivity extends AppCompatActivity {
     public static int ACTIVITY_EXITING = 2;
     public int mActivityStatus = 0;
 
-    public static final String PRODUCT_INIT_URL = "http://1.220.50.226:9090";
+    //public static final String PRODUCT_INIT_URL = "http://tm.returnp.com";
+    //public static final String PRODUCT_INIT_URL = "http://www.returnp.com/m/main/index.do";
+    public static final String PRODUCT_INIT_URL = "http://192.168.219.169:9090/m/main/index.do";
+    public static final String PRODUCT_JOIN_URL = "http://192.168.219.169:9090/m/main/index.do";
     private static String INIT_URL = null;
 
     public static final String BRIDGE_NAME = "returnpAndroidBridge";
@@ -98,12 +103,28 @@ public class ReturnPMainActivity extends AppCompatActivity {
 
         this.INIT_URL =  ReturnPMainActivity.PRODUCT_INIT_URL;
 
+        /*추천인에 의한 앱 설치 및 초기 실행시에 초기 회원 가입 페이지로 이동*/
+        if (this.mSession.getSessionValue(ReturnPSession.PREF_RECOMMENDER_INST).equals("") &&
+                ( this.mSession.getSessionValue(ReturnPSession.PREF_RECOMMENDER_EMAIL).equals("")) &&
+                ( this.mSession.getSessionValue(ReturnPSession.PREF_RECOMMENDER_EMAIL).length() > 1)){
+            this.INIT_URL =  ReturnPMainActivity.PRODUCT_JOIN_URL;
+        }else {
+            /* 추천인에 의한 앱 설치 및 초기 실행이라고 하더라도, 바로 회원 가입을 하지 않을 수 있기 때문에
+            * 해당 Preferenece 정보는 유지하며, 회원 가입 완료후에야 해당 정보를 삭제함
+            * */
+
+        }
         String userAuthToken = ReturnPMainActivity.this.mSession.getUserAutoToken();
         Map<String, String> headerMap  = new HashMap<String, String>();
         headerMap.put(ReturnPMainActivity.HEADER_USER_AUTH_TOKEN, userAuthToken);
         mWebView.loadUrl(ReturnPMainActivity.INIT_URL,headerMap);
     }
 
+
+    private void initActivity() {
+        this.mSession = new ReturnPSession(this);
+        this.mReturnpAndroidBridge = new ReturnpAndroidBridge(this, this.mSession);
+    }
 
     protected void checkPermisssion() {
         if (this.checkCallingOrSelfPermission(Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
@@ -118,11 +139,6 @@ public class ReturnPMainActivity extends AppCompatActivity {
             webView.getSettings().setAllowFileAccessFromFileURLs(true);
         } catch(NullPointerException e) {
         }
-    }
-
-    private void initActivity() {
-        this.mSession = new ReturnPSession(this);
-        this.mReturnpAndroidBridge = new ReturnpAndroidBridge(this, this.mSession);
     }
 
     private void initWebView() {
@@ -203,6 +219,23 @@ public class ReturnPMainActivity extends AppCompatActivity {
                     return true;
                 }
 
+            }
+
+            @Override
+            public WebResourceResponse shouldInterceptRequest(WebView view, WebResourceRequest request) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    String userAuthToken = ReturnPMainActivity.this.mSession.getUserAutoToken();
+                    request.getRequestHeaders().put(ReturnPMainActivity.HEADER_USER_AUTH_TOKEN, userAuthToken);
+                }
+
+                return super.shouldInterceptRequest(view, request);
+            }
+
+            @Override
+            public WebResourceResponse shouldInterceptRequest(final WebView view, final String url) {
+                String userAuthToken = ReturnPMainActivity.this.mSession.getUserAutoToken();
+                Map<String, String> headerMap  = new HashMap<String, String>();
+                return super.shouldInterceptRequest(view, url);
             }
 
             @Override

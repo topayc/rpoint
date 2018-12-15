@@ -7,6 +7,6 @@
     <string name="phone">전화</string>
     <string name="camera">카메라</string>
     <string name="gps">GPS</string>
+    <string name="recommend_inst">추천인에 의한 앱 설치</string>
     <color name="bg">#aaaaaa</color>
-
 </resources>

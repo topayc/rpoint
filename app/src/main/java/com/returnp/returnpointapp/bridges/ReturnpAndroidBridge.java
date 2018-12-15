@@ -136,7 +136,28 @@ public class ReturnpAndroidBridge {
 
             }
         }
+    }
 
+    @JavascriptInterface
+    public void afterJoinComplete() {
+        String result = "100";
+        JSONObject message = new JSONObject();
+        this.mSession.removeData(ReturnPSession.PREF_RECOMMENDER_INST);
+        this.mSession.removeData(ReturnPSession.PREF_RECOMMENDER_EMAIL);
+        try {
+            message.put("result", "100");
+        }catch(JSONException e){
+            Log.d("joinComplete", e.getMessage());
+            try {
+                message.put("result", "200");
+            } catch (JSONException e1) {
+                e1.printStackTrace();
+                Log.d("joinComplete", e1.getMessage());
+            }
+
+        }finally {
+            this.setBridgeResponse(null, message.toString());
+        }
     }
 
     @JavascriptInterface

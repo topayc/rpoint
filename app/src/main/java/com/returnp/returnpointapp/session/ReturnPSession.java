@@ -11,10 +11,24 @@ public class ReturnPSession {
     public static String PREF_USER_NAME = "user_name";
     public static String PREF_USER_EMAIL = "user_email";
     public static String PREF_USER_AUTH_TOKEN = "user_auth_token";
+    public static String PREF_RECOMMENDER_INST = "recommneder_inst";
+    public static String PREF_RECOMMENDER_EMAIL = "recommneder_email";
 
     private SharedPreferences sharedPreferences;
     public ReturnPSession(Context context){
         this.sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+    }
+
+    public void setData(String key, String value){
+        SharedPreferences.Editor editor = this.sharedPreferences.edit();
+        editor.putString(key, value);
+        editor.commit();
+    }
+
+    public void removeData(String key){
+        SharedPreferences.Editor editor = this.sharedPreferences.edit();
+        editor.remove(key);
+        editor.commit();
     }
 
     public void setUserName(String userName){
