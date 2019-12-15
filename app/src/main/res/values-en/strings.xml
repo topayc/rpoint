@@ -3,4 +3,10 @@
     <string name="app_name">ReturnP</string>
     <string name="finish_back">click back button for finishing App</string>
     <string name="qr_sacn_error">The QRcode was not scanned.try it again</string>
+    <string name="request_permission">Permission to use this feature</string>
+    <string name="not_permission"> Permission denied</string>
+    <string name="phone">Telephone</string>
+    <string name="camera">Camera</string>
+    <string name="gps">GPS</string>
+    <string name="recommend_inst">Install apps by referrers</string>
 </resources>

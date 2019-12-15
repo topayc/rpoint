@@ -1,14 +1,14 @@
 apply plugin: 'com.android.application'
 
 android {
-    def APP_NAME = "returnpoint_"
+    def APP_NAME = "ReturnPoint_"
     compileSdkVersion 28
     defaultConfig {
-        applicationId "com.returnp.returnpointapp"
+        applicationId "com.tophappyworld.returnpapp"
         minSdkVersion 14
         targetSdkVersion 28
-        versionCode 4
-        versionName "1.0"
+        versionCode 23
+        versionName "4.1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         archivesBaseName = APP_NAME
     }
@@ -36,4 +36,7 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     implementation 'com.journeyapps:zxing-android-embedded:3.5.0'
+    implementation 'com.google.firebase:firebase-core:16.0.1'
+    implementation 'com.google.firebase:firebase-messaging:17.3.4'
 }
+apply plugin: 'com.google.gms.google-services'

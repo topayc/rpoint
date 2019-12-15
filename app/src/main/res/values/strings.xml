@@ -8,5 +8,7 @@
     <string name="camera">카메라</string>
     <string name="gps">GPS</string>
     <string name="recommend_inst">추천인에 의한 앱 설치</string>
+    <string name="request_auth">요청된 권한은 앱을 이용하기 위한 필수적인 권한으로 요청된 권한을 허용해주셔야 앱을 이용할 수 있습니다</string>
     <color name="bg">#aaaaaa</color>
+    <string name="msg_token_fmt" translatable="false">InstanceID Token: %s</string>
 </resources>
