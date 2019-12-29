@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "293528963642",
+    "firebase_url": "https://returnp-fcm.firebaseio.com",
+    "project_id": "returnp-fcm",
+    "storage_bucket": "returnp-fcm.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:293528963642:android:c5b6eecff4631edb",
+        "android_client_info": {
+          "package_name": "com.tophappyworld.returnpapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "293528963642-8c6rm596lvhkuj4fuu5fqpk40sk3aa7k.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB8mv15BQVFagwRK57KXNg4BlrW8eXNupU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "293528963642-8c6rm596lvhkuj4fuu5fqpk40sk3aa7k.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
